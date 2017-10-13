@@ -39,10 +39,7 @@ public class AutoTrader {
 	
 	@Before
 	public void setUp() {
-		//System.getProperty("webdriver.chrome.driver","/Users/Alex-Rowan/Documents/GitHub/Testing/AutomatedTesting");
-		//webdriver = new ChromeDriver();
 		webdriver = webDriverFactory.getwebdriver(row.get(3));
-		//webdriver.manage().window().maximize();
 	}
 	
 	public static String takeScreenShot(WebDriver webdriver, String fileName) throws IOException {
@@ -117,17 +114,17 @@ public class AutoTrader {
 	public void Test3() throws IOException {
 		try {
 			webdriver.navigate().to("https://www.autotrader.co.uk/");
-			WebElement Postcode = webdriver.findElement(By.cssSelector("#postcode"));
-			Postcode.sendKeys(row.get(4));
-			WebElement DropDown = webdriver.findElement(By.cssSelector("#radius"));
-			Select dropdown = new Select(DropDown);
-			dropdown.selectByVisibleText(row.get(5));
-			WebElement MinPrice = webdriver.findElement(By.cssSelector("#searchVehiclesPriceFrom"));
-			Select dropdown2 = new Select(MinPrice);
-			dropdown2.selectByVisibleText(row.get(6));
-			WebElement MaxPrice = webdriver.findElement(By.cssSelector("#searchVehiclesPriceTo"));
-			Select dropdown3 = new Select(MaxPrice);
-			dropdown3.selectByVisibleText(row.get(7));
+			Actions action = new Actions(webdriver);
+			WebElement search = webdriver.findElement(By.cssSelector("#js-header-nav > ul > li:nth-child(1) > a"));
+			action.moveToElement(search).perform();
+			WebElement locator = webdriver.findElement(By.cssSelector("#top-nav__buying > li:nth-child(1)"));
+			action.moveToElement(locator).click().perform();
+//			locator.click();
+//			WebElement Postcode = webdriver.findElement(By.cssSelector("#postcode"));
+//			Postcode.sendKeys(row.get(4));
+//			WebElement MaxPrice = webdriver.findElement(By.cssSelector("#searchVehiclesPriceTo"));
+//			Select dropdown2 = new Select(MaxPrice);
+// 			dropdown2.selectByValue(row.get(8));
 			
 		} catch(Exception e) {
 			System.out.println("Element Not Found");
@@ -139,79 +136,94 @@ public class AutoTrader {
 	@Test   // sell a car 
 	public void Test4() throws IOException {
 		try {
-			
+			webdriver.navigate().to("https://www.autotrader.co.uk/");
+			WebElement Postcode = webdriver.findElement(By.cssSelector("#js-sell-module > form > input:nth-child(1)"));
+			Postcode.sendKeys(row.get(2));
+			WebElement Mileage = webdriver.findElement(By.cssSelector("#js-sell-module > form > input.c-form__input.no-spinner"));
+			Mileage.sendKeys(row.get(8));
+			WebElement Go = webdriver.findElement(By.cssSelector("#js-sell-module > form > button"));
+			Go.click();
+			WebElement Next = webdriver.findElement(By.cssSelector("#submitPage"));
+			if (Next.isDisplayed()) {
+				assertTrue("pass", true);
+			}
+			else
+			{
+				fail();
+			}
 		} catch(Exception e) {
 			System.out.println("Element Not Found");
 			AutoTrader.takeScreenShot(webdriver, "ScreenShot4");
 			Assert.fail();
 		}
 	}
-//	
-//	@Test		enter sale car details wrong
-//	public void Test5() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot5");
-//			Assert.fail();
-//		}
-//	}
-//	
-//	@Test      //value your car
-//	public void Test6() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot6");
-//			Assert.fail();
-//		}
-//	}
-//	
-//	@Test
-//	public void Test7() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot7");
-//			Assert.fail();
-//		}
-//	}
-//	
-//	@Test
-//	public void Test8() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot8");
-//			Assert.fail();
-//		}
-//	}
-//	
-//	@Test
-//	public void Test9() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot9");
-//			Assert.fail();
-//		}
-//	}
-//	
-//	@Test
-//	public void Test10() throws IOException {
-//		try {
-//			
-//		} catch(Exception e) {
-//			System.out.println("Element Not Found");
-//			AutoTrader.takeScreenShot(webdriver, "ScreenShot10");
-//			Assert.fail();
-//		}
-//	}
+
+	@Test		//Buy a car
+	public void Test5() throws IOException {
+		try {
+			webdriver.navigate().to("https://www.autotrader.co.uk/");
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot5");
+			Assert.fail();
+		}
+	}
+
+	@Test      //apply for car finance
+	public void Test6() throws IOException {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot6");
+			Assert.fail();
+		}
+	}
+	
+	@Test		//Find a car dealer
+	public void Test7() throws IOException {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot7");
+			Assert.fail();
+		}
+	}
+	
+	@Test		//part exchange your car
+	public void Test8() throws IOException {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot8");
+			Assert.fail();
+		}
+	}
+	
+	@Test		//apply for inshurance
+	public void Test9() throws IOException {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot9");
+			Assert.fail();
+		}
+	}
+	
+	@Test		//check car history
+	public void Test10() throws IOException {
+		try {
+			
+		} catch(Exception e) {
+			System.out.println("Element Not Found");
+			AutoTrader.takeScreenShot(webdriver, "ScreenShot10");
+			Assert.fail();
+		}
+	}
 	
 	public void dragAndDrop(WebElement dragable, WebElement dropable,int dropableOffsetX, int dropableOffsetY) {
 	    Actions builder = new Actions(webdriver);
